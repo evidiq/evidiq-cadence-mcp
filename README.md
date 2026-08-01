@@ -241,7 +241,7 @@ fleet sweep across all 17 services                 → broken_entries=0
 
 ### Live test through the OpenClaw agent (glm-5.2)
 
-The Cadence skill was exercised end-to-end by the OpenClaw agent on the hackaton-do VPS:
+The Cadence skill was exercised end-to-end by the OpenClaw agent:
 the agent read the skill, discovered the MCP server, and called all 18 tools in one run
 against `https://mcp.evidiq.dev/cadence/mcp`. Full run output in `docs/live-test/evtest3-out.json`.
 
