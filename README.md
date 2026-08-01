@@ -145,25 +145,29 @@ flowchart TB
         monitor["3. Monitor engine<br/>target MCP call + condition trip"]
         receipt["4. EIP-191 receipt<br/>JCS SHA-256 digest · signature · idempotencyKey"]
         deliver["5. Delivery<br/>poll · webhook"]
+        attest["6. Attestation + anchor<br/>firing-history bundle · EIP-191 signed"]
         store --> engine --> monitor
         monitor --> receipt
         engine --> receipt
         receipt --> deliver
+        receipt --> attest
     end
 
+    og[("0G Storage<br/>Merkle root · upload tx<br/>chain 16661")]
     free --> store
     gate --> engine
+    attest -. best effort .-> og
+    og -. root + tx .-> response
 
-    response["<b>MCP response</b><br/>jobId + spec + receipt + attestation"]
-    deliver --> response
+    response["<b>MCP response</b><br/>jobId + spec + receipt + attestation<br/>anchoring: anchored / failed"]
 
     classDef client fill:#312e81,stroke:#a78bfa,color:#ffffff,stroke-width:2px;
     classDef payment fill:#052e16,stroke:#4ade80,color:#ffffff,stroke-width:2px;
     classDef core fill:#0f172a,stroke:#38bdf8,color:#ffffff,stroke-width:2px;
     classDef output fill:#4c1d95,stroke:#c4b5fd,color:#ffffff,stroke-width:2px;
     class agent,request client;
-    class free,gate,xlayer payment;
-    class store,engine,monitor,receipt,deliver core;
+    class free,gate,xlayer,og payment;
+    class store,engine,monitor,receipt,deliver,attest core;
     class response output;
     style cadence fill:#0f172a,stroke:#38bdf8,color:#e0f2fe,stroke-width:2px;
 ```
