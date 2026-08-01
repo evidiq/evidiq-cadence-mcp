@@ -206,6 +206,14 @@ Live receipt verification (curl, full signature)
   expectedSigner == recoveredSigner == 0x8a3c7524Aaed081825aC88eC7f4cCECFc583ee7D ✓
 ```
 
+### Live test through the OpenClaw agent (glm-5.2)
+
+The Cadence skill was exercised end-to-end by the OpenClaw agent on the hackaton-do VPS:
+the agent read the skill, discovered the MCP server, and called all 18 tools in one run
+against `https://mcp.evidiq.dev/cadence/mcp`. Full run output in `docs/live-test/evtest3-out.json`.
+
+![EVIDIQ Cadence MCP — live test report](./docs/live-test/report.png)
+
 ---
 
 ## Use it from any agent
