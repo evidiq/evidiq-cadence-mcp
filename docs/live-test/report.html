@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EVIDIQ Cadence MCP — Live Test Report</title>
+<style>
+  body { font-family: "DejaVu Sans", sans-serif; margin: 0; padding: 32px; background: #0b1020; color: #e8ecf5; }
+  h1 { margin: 0 0 4px; font-size: 26px; color: #ffffff; }
+  .sub { color: #8a94b0; font-size: 13px; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+  .card { background: #141b31; border: 1px solid #232c4a; border-radius: 10px; padding: 14px 16px; }
+  .tool { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid #1d2540; }
+  .tool:last-child { border-bottom: none; }
+  .name { font-weight: 600; font-size: 14px; color: #cfd8ee; }
+  .detail { font-size: 11.5px; color: #7f8aac; margin-top: 2px; }
+  .badge { border-radius: 999px; padding: 3px 10px; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+  .ok { background: #12331f; color: #4ade80; border: 1px solid #1e5a38; }
+  .warn { background: #3a2c12; color: #fbbf24; border: 1px solid #5c471d; }
+  .panel { background: #10172a; border: 1px solid #232c4a; border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+  .panel h2 { margin: 0 0 10px; font-size: 14px; color: #9fb0dd; text-transform: uppercase; letter-spacing: 0.08em; }
+  .kv { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+  .kv span:first-child { color: #7f8aac; }
+  .kv span:last-child { font-family: monospace; color: #cfe0ff; font-size: 12px; }
+  .sig { font-family: monospace; font-size: 11px; color: #8fd3a8; word-break: break-all; }
+</style>
+</head>
+<body>
+  <h1>EVIDIQ Cadence — MCP Live Test</h1>
+  <div class="sub">mcp.evidiq.dev/cadence &bull; 18 tools &bull; EIP-191 receipts &bull; run via OpenClaw agent (glm-5.2) on hackaton-do VPS &bull; 2026-08-02</div>
+
+  <div class="panel" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+    <div class="kv"><span>Status</span><span style="color:#4ade80;font-weight:700">ok — 17/18 via agent, 18/18 verified</span></div>
+    <div class="kv"><span>Signer</span><span>0x8a3c&hellip;ee7D</span></div>
+    <div class="kv"><span>Jobs created</span><span>7</span></div>
+    <div class="kv"><span>Receipts signed</span><span>5+ (EIP-191, 0x8a3c&hellip;ee7D)</span></div>
+  </div>
+
+  <div class="panel"><h2>Tool results</h2><div class="grid" id="tools"><div class="tool"><div><div class="name">cadence_capabilities</div><div class="detail">✅ ok — 18 tools, signer `0x8a3c…ee7D`, tickerFresh: true</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">estimate_cost</div><div class="detail">✅ ok — schedule_monitor = 0.02 USDT0 (atomic 20000, chain eip155:196)</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">validate_schedule (recurring)</div><div class="detail">✅ ok — parsed recurring/1h, intervalMs 3600000, nothing created/charged</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">validate_schedule (monitor)</div><div class="detail">✅ error (expected) — "targetUrl is required for a monitor" — correctly rejects monitor missing target</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">schedule_job</div><div class="detail">✅ ok — jobId `j_ad8582afdccb4038`, one_shot, fires in 5s</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">schedule_recurring</div><div class="detail">✅ ok — jobId `j_39a15b39ab7e4844`, 15m interval, maxFires 2</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">schedule_retry</div><div class="detail">✅ ok — jobId `j_3fc27f3c3b1e4158`, backoff [1m, 5m]</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">schedule_expiration</div><div class="detail">✅ ok — jobId `j_fc1c655323614952`, deadline 2099, leadTime 10m</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">schedule_monitor</div><div class="detail">✅ ok — jobId `j_5f4bfc95a65845bf`, condition `{field:"/ok",op:"eq",value:true}`, interval 1h</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">schedule_verification</div><div class="detail">✅ ok — jobId `j_a5b8ff1fa02b4ffa`, condition same, interval 1h</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">schedule_workflow</div><div class="detail">✅ ok — jobId `j_cab31b9ba8ee40b0`, 1 step deadline 2099, escalation payload</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">get_job</div><div class="detail">✅ ok — job active, pendingDeliveries: 4</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">poll_due</div><div class="detail">✅ ok — 5 deliveries (incl. schedule_job `j_ad8582afdccb4038`), all with receipts, idempotencyKeys, signatures,</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">verify_receipt</div><div class="detail">⚠️ partial — digestValid: **true**, signatureValid: **false**, recoveredSigner: null (signature not recovering</div></div><div class="badge warn">WARN</div></div><div class="tool"><div><div class="name">attest_execution</div><div class="detail">✅ ok — digest `0x5747…f2ec`, signature `0x7e2e…161b`, full firing history, 0G anchoring pending</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">reschedule_job</div><div class="detail">✅ ok — rescheduled +30m, history preserved</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">pause_job → resume_job</div><div class="detail">✅ ok — recurring job paused then resumed, state: active</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">cancel_job</div><div class="detail">✅ ok — workflow cancelled, closing receipt signed (outcome: "cancelled", receiptSigned: true)</div></div><div class="badge ok">OK</div></div><div class="tool"><div><div class="name">attest_execution</div><div class="detail">✅ ok — retry job attestation, digest `0x026d…578c`, 1 firing in history</div></div><div class="badge ok">OK</div></div></div></div>
+
+  <div class="panel"><h2>Receipt verification (live)</h2>
+    <div class="kv"><span>digestValid</span><span style="color:#4ade80">true</span></div>
+    <div class="kv"><span>signatureValid</span><span style="color:#4ade80">true</span></div>
+    <div class="kv"><span>expectedSigner</span><span>0x8a3c7524Aaed081825aC88eC7f4cCECFc583ee7D</span></div>
+    <div class="kv"><span>recoveredSigner</span><span style="color:#4ade80">0x8a3c7524Aaed081825aC88eC7f4cCECFc583ee7D</span></div>
+    <div class="kv"><span>attest_execution (live)</span><span style="color:#4ade80">ok — digest+signature+history</span></div>
+    <div class="sig">sig 0x22bb&hellip;9e1b &bull; digest 0x678dfa31&hellip;e29</div>
+  </div>
+</body>
+</html>

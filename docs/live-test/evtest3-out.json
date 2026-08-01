@@ -1,0 +1,786 @@
+{
+  "runId": "808aefe6-b141-4d8b-867d-2a0bbf1b52f8",
+  "status": "ok",
+  "summary": "completed",
+  "result": {
+    "payloads": [
+      {
+        "text": "Step 19 ok — full attestation with digest, signature, firing history, 0G anchoring pending.\n\n---\n\n## Final Report\n\n1. **cadence_capabilities** — ✅ ok — 18 tools, signer `0x8a3c…ee7D`, tickerFresh: true\n2. **estimate_cost** — ✅ ok — schedule_monitor = 0.02 USDT0 (atomic 20000, chain eip155:196)\n3. **validate_schedule (recurring)** — ✅ ok — parsed recurring/1h, intervalMs 3600000, nothing created/charged\n4. **validate_schedule (monitor)** — ✅ error (expected) — \"targetUrl is required for a monitor\" — correctly rejects monitor missing target\n5. **schedule_job** — ✅ ok — jobId `j_ad8582afdccb4038`, one_shot, fires in 5s\n6. **schedule_recurring** — ✅ ok — jobId `j_39a15b39ab7e4844`, 15m interval, maxFires 2\n7. **schedule_retry** — ✅ ok — jobId `j_3fc27f3c3b1e4158`, backoff [1m, 5m]\n8. **schedule_expiration** — ✅ ok — jobId `j_fc1c655323614952`, deadline 2099, leadTime 10m\n9. **schedule_monitor** — ✅ ok — jobId `j_5f4bfc95a65845bf`, condition `{field:\"/ok\",op:\"eq\",value:true}`, interval 1h\n10. **schedule_verification** — ✅ ok — jobId `j_a5b8ff1fa02b4ffa`, condition same, interval 1h\n11. **schedule_workflow** — ✅ ok — jobId `j_cab31b9ba8ee40b0`, 1 step deadline 2099, escalation payload\n12. **get_job** — ✅ ok — job active, pendingDeliveries: 4\n13. **poll_due** — ✅ ok — 5 deliveries (incl. schedule_job `j_ad8582afdccb4038`), all with receipts, idempotencyKeys, signatures, none late\n14. **verify_receipt** — ⚠️ partial — digestValid: **true**, signatureValid: **false**, recoveredSigner: null (signature not recovering — likely EIP-191 v-byte handling issue on the verification side)\n15. **attest_execution** — ✅ ok — digest `0x5747…f2ec`, signature `0x7e2e…161b`, full firing history, 0G anchoring pending\n16. **reschedule_job** — ✅ ok — rescheduled +30m, history preserved\n17. **pause_job → resume_job** — ✅ ok — recurring job paused then resumed, state: active\n18. **cancel_job** — ✅ ok — workflow cancelled, closing receipt signed (outcome: \"cancelled\", receiptSigned: true)\n19. **attest_execution** — ✅ ok — retry job attestation, digest `0x026d…578c`, 1 firing in history\n\n**TOTAL JOBS CREATED: 7** (schedule_job, schedule_recurring, schedule_retry, schedule_expiration, schedule_monitor, schedule_verification, schedule_workflow)\n\n### Changes from previous run\n- **`validate_schedule`** — ✅ FIXED (was rejecting all inputs; now validates recurring ok and rejects monitor without targetUrl)\n- **`schedule_monitor` / `schedule_verification`** — ✅ FIXED (condition param now accepted; both jobs created successfully)\n- **`attest_execution`** — ✅ FIXED (was \"invalid private key\"; now returns full signed attestation)\n- **`verify_receipt`** — ⚠️ IMPROVED but incomplete (digestValid now true; signatureValid still false, recoveredSigner null)",
+        "mediaUrl": null
+      }
+    ],
+    "meta": {
+      "durationMs": 87313,
+      "agentMeta": {
+        "sessionId": "1be86918-9f55-4a5d-8393-d14d3c94f921",
+        "sessionFile": "/root/.openclaw/agents/main/sessions/1be86918-9f55-4a5d-8393-d14d3c94f921.jsonl",
+        "provider": "zerog",
+        "model": "glm-5.2",
+        "contextTokens": 200000,
+        "agentHarnessId": "openclaw",
+        "usage": {
+          "input": 11894,
+          "output": 2478,
+          "cacheRead": 643328,
+          "total": 55012
+        },
+        "lastCallUsage": {
+          "input": 845,
+          "output": 855,
+          "cacheRead": 53312,
+          "cacheWrite": 0,
+          "total": 55012
+        },
+        "promptTokens": 54157,
+        "contextBudgetStatus": {
+          "schemaVersion": 1,
+          "source": "pre-prompt-estimate",
+          "updatedAt": 1785610697263,
+          "provider": "zerog",
+          "model": "glm-5.2",
+          "route": "fits",
+          "shouldCompact": false,
+          "estimatedPromptTokens": 43596,
+          "contextTokenBudget": 200000,
+          "promptBudgetBeforeReserve": 180000,
+          "reserveTokens": 20000,
+          "effectiveReserveTokens": 20000,
+          "remainingPromptBudgetTokens": 136404,
+          "overflowTokens": 0,
+          "toolResultReducibleChars": 0,
+          "messageCount": 84,
+          "unwindowedMessageCount": 84,
+          "sessionId": "1be86918-9f55-4a5d-8393-d14d3c94f921"
+        }
+      },
+      "aborted": false,
+      "systemPromptReport": {
+        "source": "run",
+        "generatedAt": 1785610697120,
+        "sessionId": "1be86918-9f55-4a5d-8393-d14d3c94f921",
+        "sessionKey": "agent:main:main",
+        "provider": "zerog",
+        "model": "glm-5.2",
+        "workspaceDir": "/root/.openclaw/workspace",
+        "bootstrapMaxChars": 20000,
+        "bootstrapTotalMaxChars": 60000,
+        "bootstrapTruncation": {
+          "warningMode": "always",
+          "warningShown": false,
+          "truncatedFiles": 0,
+          "nearLimitFiles": 0,
+          "totalNearLimit": false
+        },
+        "sandbox": {
+          "mode": "off",
+          "sandboxed": false
+        },
+        "systemPrompt": {
+          "chars": 43231,
+          "hash": "a0d558e7c965749959b279659ef1bae209b1cdd686bbb23c087702a4a304d19a",
+          "projectContextChars": 13438,
+          "nonProjectContextChars": 29793
+        },
+        "injectedWorkspaceFiles": [
+          {
+            "name": "AGENTS.md",
+            "path": "/root/.openclaw/workspace/AGENTS.md",
+            "missing": false,
+            "rawChars": 7195,
+            "injectedChars": 7195,
+            "truncated": false
+          },
+          {
+            "name": "SOUL.md",
+            "path": "/root/.openclaw/workspace/SOUL.md",
+            "missing": false,
+            "rawChars": 1509,
+            "injectedChars": 1509,
+            "truncated": false
+          },
+          {
+            "name": "TOOLS.md",
+            "path": "/root/.openclaw/workspace/TOOLS.md",
+            "missing": false,
+            "rawChars": 866,
+            "injectedChars": 866,
+            "truncated": false
+          },
+          {
+            "name": "IDENTITY.md",
+            "path": "/root/.openclaw/workspace/IDENTITY.md",
+            "missing": false,
+            "rawChars": 1275,
+            "injectedChars": 1275,
+            "truncated": false
+          },
+          {
+            "name": "USER.md",
+            "path": "/root/.openclaw/workspace/USER.md",
+            "missing": false,
+            "rawChars": 534,
+            "injectedChars": 534,
+            "truncated": false
+          },
+          {
+            "name": "HEARTBEAT.md",
+            "path": "/root/.openclaw/workspace/HEARTBEAT.md",
+            "missing": false,
+            "rawChars": 243,
+            "injectedChars": 243,
+            "truncated": false
+          },
+          {
+            "name": "BOOTSTRAP.md",
+            "path": "/root/.openclaw/workspace/BOOTSTRAP.md",
+            "missing": false,
+            "rawChars": 1668,
+            "injectedChars": 1668,
+            "truncated": false
+          }
+        ],
+        "skills": {
+          "promptChars": 16286,
+          "hash": "0fe150872b50f30df675f2e825e69e51f4fa8e3bd9afcec0a039882f5190fb29",
+          "entries": [
+            {
+              "name": "browser-automation",
+              "blockChars": 371
+            },
+            {
+              "name": "canvas",
+              "blockChars": 289
+            },
+            {
+              "name": "clawhub",
+              "blockChars": 331
+            },
+            {
+              "name": "diagram-maker",
+              "blockChars": 304
+            },
+            {
+              "name": "healthcheck",
+              "blockChars": 316
+            },
+            {
+              "name": "meme-maker",
+              "blockChars": 289
+            },
+            {
+              "name": "node-connect",
+              "blockChars": 319
+            },
+            {
+              "name": "node-inspect-debugger",
+              "blockChars": 315
+            },
+            {
+              "name": "notion",
+              "blockChars": 310
+            },
+            {
+              "name": "okx-activity",
+              "blockChars": 826
+            },
+            {
+              "name": "okx-agent-payments-protocol",
+              "blockChars": 1097
+            },
+            {
+              "name": "okx-agentic-wallet",
+              "blockChars": 1134
+            },
+            {
+              "name": "okx-ai",
+              "blockChars": 1153
+            },
+            {
+              "name": "okx-dapp-discovery",
+              "blockChars": 1208
+            },
+            {
+              "name": "okx-defi",
+              "blockChars": 1327
+            },
+            {
+              "name": "okx-dex-market",
+              "blockChars": 1108
+            },
+            {
+              "name": "okx-growth-competition",
+              "blockChars": 893
+            },
+            {
+              "name": "okx-guide",
+              "blockChars": 1993
+            },
+            {
+              "name": "python-debugpy",
+              "blockChars": 303
+            },
+            {
+              "name": "skill-creator",
+              "blockChars": 297
+            },
+            {
+              "name": "spike",
+              "blockChars": 289
+            },
+            {
+              "name": "taskflow",
+              "blockChars": 319
+            },
+            {
+              "name": "taskflow-inbox-triage",
+              "blockChars": 329
+            },
+            {
+              "name": "tmux",
+              "blockChars": 307
+            },
+            {
+              "name": "weather",
+              "blockChars": 327
+            }
+          ]
+        },
+        "tools": {
+          "listChars": 0,
+          "schemaChars": 33141,
+          "entries": [
+            {
+              "name": "read",
+              "summaryChars": 303,
+              "summaryHash": "b15dd29794ef5562ddee30a6282387ee7b40b9806c10ae2616daf75514ddc1f6",
+              "schemaChars": 304,
+              "schemaHash": "134f19bcabe3e29d63c5cebb38f1d2556759fd08adad6bc90a4b4d3cd1fb8441",
+              "propertiesCount": 3
+            },
+            {
+              "name": "edit",
+              "summaryChars": 326,
+              "summaryHash": "c498a85576e187d069e8e8ea4f70f81bddd57829600d385ef61c4359fd634c9e",
+              "schemaChars": 834,
+              "schemaHash": "457e8bb9f800b21be76c4fd8c0e3078bf07ee9bf93ac82f39944c171bd8f6d84",
+              "propertiesCount": 2
+            },
+            {
+              "name": "write",
+              "summaryChars": 127,
+              "summaryHash": "cdb1c46027b22d1f1b923b47bfe297821d9fe589a9f9d92994961948060a4d89",
+              "schemaChars": 225,
+              "schemaHash": "e98a2484f667cf7c22d76ca103bf2022bf9113dc63fe38b899e71c328cb1e833",
+              "propertiesCount": 2
+            },
+            {
+              "name": "apply_patch",
+              "summaryChars": 132,
+              "summaryHash": "432bf38688a4f011d2b765a441ac07e1fdfa9faf2051679adee04abcd9332d93",
+              "schemaChars": 153,
+              "schemaHash": "05521268363ff4f191472c90d69ef08a503ba9acf1d2febc50b3ee68db32ab65",
+              "propertiesCount": 1
+            },
+            {
+              "name": "exec",
+              "summaryChars": 446,
+              "summaryHash": "369f5e5e195c647ab1e3cfad282e6d25488d4b9fe269f1157e273a546ca80295",
+              "schemaChars": 1332,
+              "schemaHash": "49dcb29ee9f7016cd248f40cfb44508aac4d6a67d4c9acb52cbd08ad3e3ae893",
+              "propertiesCount": 12
+            },
+            {
+              "name": "process",
+              "summaryChars": 362,
+              "summaryHash": "21d78afb643a24f211fe9aa86c748f165ca82f1dc21bbaf6e3e6d6d4d4411d86",
+              "schemaChars": 1074,
+              "schemaHash": "a2d30a25569f409d7e8539844c89a088044535388b24031d014577b96ed27c5c",
+              "propertiesCount": 12
+            },
+            {
+              "name": "message",
+              "summaryChars": 60,
+              "summaryHash": "76c05ee1f105661df34669c4e3b9b095dc597e625633abb3fae8f88b9d684681",
+              "schemaChars": 1793,
+              "schemaHash": "f3a5be2b9ddfec2a9933b822796fb4aa384716f713f54338f48acfe9768548e1",
+              "propertiesCount": 27
+            },
+            {
+              "name": "tts",
+              "summaryChars": 217,
+              "summaryHash": "652c1970c199d82b61061a40be2adddfc7e5634df5d896d776a8a0047c8a6b75",
+              "schemaChars": 264,
+              "schemaHash": "e40695f92ef72d913ee5eb13ef738a15d6f33ae3af3ec609975c45991ef99a78",
+              "propertiesCount": 3
+            },
+            {
+              "name": "agents_list",
+              "summaryChars": 63,
+              "summaryHash": "a7afb8adbaf98833df68160db0677ec2a6bc30b1b96f3592392c9df59e310c65",
+              "schemaChars": 33,
+              "schemaHash": "8243f0af367f188a376f2c17b5eabe872a2f7a979813e0d4e2be6d594c2aa259",
+              "propertiesCount": 0
+            },
+            {
+              "name": "get_goal",
+              "summaryChars": 71,
+              "summaryHash": "58dea7906d9e17e5f89a75fea24597ee068d8a56af824370dc27f8501374d6e3",
+              "schemaChars": 33,
+              "schemaHash": "8243f0af367f188a376f2c17b5eabe872a2f7a979813e0d4e2be6d594c2aa259",
+              "propertiesCount": 0
+            },
+            {
+              "name": "create_goal",
+              "summaryChars": 155,
+              "summaryHash": "f01e3a63d673a410ba55213ce6bd3fa2b0d2279e8e780c18aa0cb5aa991b29b3",
+              "schemaChars": 267,
+              "schemaHash": "27ee794432736471bd76390e236cc7d7e98f8469a02656e7a27109041eea0f8c",
+              "propertiesCount": 2
+            },
+            {
+              "name": "update_goal",
+              "summaryChars": 212,
+              "summaryHash": "285201690e5f2456b4cdcd252ff391709b84d69538df61bad694d3c0cfc19958",
+              "schemaChars": 207,
+              "schemaHash": "c37894492eedfad02f1e7fe1488900765bfe547f3b3f34cefbab4f7f57441c2c",
+              "propertiesCount": 2
+            },
+            {
+              "name": "skill_workshop",
+              "summaryChars": 171,
+              "summaryHash": "577c1d2b8f56bf3e9dd5e00463bbce8b8bf4cf201da9b21b588dcaa3bc6ed8cf",
+              "schemaChars": 2298,
+              "schemaHash": "a15f720240f6f8fed5b136844a6868388a4c35170b419a89c570bc560dc27090",
+              "propertiesCount": 13
+            },
+            {
+              "name": "sessions_list",
+              "summaryChars": 150,
+              "summaryHash": "6991b34a692cbbecc50302184503776bf8d7317b336d649fcd9373beab5473dc",
+              "schemaChars": 465,
+              "schemaHash": "89e377fd8694a3b81a5d72a0e9536e1770a127aff3ee539cef01c5af01e59129",
+              "propertiesCount": 10
+            },
+            {
+              "name": "sessions_history",
+              "summaryChars": 149,
+              "summaryHash": "09b418c8da696b361c021f66705dab0215a613f6c18a9722767f6129907e0dcd",
+              "schemaChars": 202,
+              "schemaHash": "7c48bf270e608aa5c167ec15d571b536c626aed56e88d6e760fcf0802bb75cc4",
+              "propertiesCount": 4
+            },
+            {
+              "name": "sessions_send",
+              "summaryChars": 282,
+              "summaryHash": "061e9ef3487676bb2a4fd4c0336bd973aaab5eea0725e7443c4cb17518cd1e78",
+              "schemaChars": 275,
+              "schemaHash": "f1fbaa412fe6b6aee102234c87c5aa140f39c9086f9bae6e1e9691309a602ffb",
+              "propertiesCount": 5
+            },
+            {
+              "name": "sessions_spawn",
+              "summaryChars": 578,
+              "summaryHash": "c75061234ba01a4eb29ca223c1c63a44935e9e555ef2ca280722ba9e844db86d",
+              "schemaChars": 1151,
+              "schemaHash": "9a91c7668463da8a66386260ce2ae97e7efe3bb93b9b6f03ac85102c354457e1",
+              "propertiesCount": 15
+            },
+            {
+              "name": "sessions_yield",
+              "summaryChars": 79,
+              "summaryHash": "f3782fc41c1522657e1d3494f486a2df998fed38a6b89dcf7f6934fb41424320",
+              "schemaChars": 60,
+              "schemaHash": "b1c4c753820bc3096d85ef7a266a14c9fbe12450536db58076b75bb61d14dbbb",
+              "propertiesCount": 1
+            },
+            {
+              "name": "subagents",
+              "summaryChars": 132,
+              "summaryHash": "1c2ffd38549c0444b118d43736fc4b875ea1aaabc446bbf8bc1fc4ee9180cca4",
+              "schemaChars": 122,
+              "schemaHash": "c4a241d2c3d46ba7985abfce4d3fcd63298ce81f89d49183c8f3d584c48d0c33",
+              "propertiesCount": 2
+            },
+            {
+              "name": "session_status",
+              "summaryChars": 278,
+              "summaryHash": "71177e543dc6235bad4b1a26761995681dcec27ab58dcb4f4f8a7fc9a7b2b5aa",
+              "schemaChars": 89,
+              "schemaHash": "d2995f3d69d126e98ac93eec3c2a9fe5556925bd7979a8e4b6b5a2bf62d329dd",
+              "propertiesCount": 2
+            },
+            {
+              "name": "web_search",
+              "summaryChars": 65,
+              "summaryHash": "b38e9b3c079beaa988d3c576303660b91a55c2e72f56351da04160529173273f",
+              "schemaChars": 991,
+              "schemaHash": "3879e368875d824b14e0e683f81408824e9a2a5850fa2f8514a68caebda54d18",
+              "propertiesCount": 12
+            },
+            {
+              "name": "web_fetch",
+              "summaryChars": 93,
+              "summaryHash": "8875afbb51bd63673e5e6836ca31eeda73914a464862665cd73b346e28d28fd5",
+              "schemaChars": 317,
+              "schemaHash": "d2d8ad58a1b84d849dd16142282aff6c5606f7b0e3d08405e1b740a6a79e6bcc",
+              "propertiesCount": 3
+            },
+            {
+              "name": "browser",
+              "summaryChars": 1546,
+              "summaryHash": "949fb149e0a069b95d9a8e5c89f1ee01ec31390c598611ebd9e4dbaf7c3d010c",
+              "schemaChars": 3624,
+              "schemaHash": "6a8fab5fa583c1d2cb2a6634de6b1736d835f3ebfdcd24833b5f672b7bd30376",
+              "propertiesCount": 54
+            },
+            {
+              "name": "canvas",
+              "summaryChars": 106,
+              "summaryHash": "6866a14fd046d6ce7e58de5a7f29641cc66acba740b6d337b8cbfadd910b133b",
+              "schemaChars": 724,
+              "schemaHash": "e604498279727976b36e963ca00916f5ad03b7c6118989ea471c8301b38e1c4e",
+              "propertiesCount": 18
+            },
+            {
+              "name": "file_fetch",
+              "summaryChars": 639,
+              "summaryHash": "56074a5ddb12cd8ac5801ad567f86613badf1a3484fbc8a6307033ed90742c44",
+              "schemaChars": 609,
+              "schemaHash": "fafb2d121a41160e5ca3b42b286a199ec3be500877e673a51181d1a98854887f",
+              "propertiesCount": 6
+            },
+            {
+              "name": "dir_list",
+              "summaryChars": 577,
+              "summaryHash": "5a8ac409eb0fd95f07f7a95246b01d86453ed33ab9e975c9030e841bd83b8334",
+              "schemaChars": 724,
+              "schemaHash": "5a7ce71df247e0dfa197e040d34f95c6c2db1abeb76b37db6c85ff61123a7b97",
+              "propertiesCount": 7
+            },
+            {
+              "name": "dir_fetch",
+              "summaryChars": 598,
+              "summaryHash": "3ca6152f2f0b6c6767f1d3679e71e5d4c938b7b9a7c0797334662f433d8e74ac",
+              "schemaChars": 767,
+              "schemaHash": "d812d2b74bae27cb065b13f0965bf34329fb2dda541f29780e467d14d657fd23",
+              "propertiesCount": 7
+            },
+            {
+              "name": "file_write",
+              "summaryChars": 550,
+              "summaryHash": "a014f1e3cf507317ef3408d493922ddf306c5705c582f363d3a89627d64c6f34",
+              "schemaChars": 975,
+              "schemaHash": "37fddd38f978220e6507ec28b3ec3e9684ae3d4c54d89476f1e845055858c147",
+              "propertiesCount": 7
+            },
+            {
+              "name": "memory_search",
+              "summaryChars": 605,
+              "summaryHash": "0f918d28864d3682ae77731f149273997c84773592a466b18c7cd0121b599a05",
+              "schemaChars": 250,
+              "schemaHash": "088cd2a3d3a47b251429ff7c56844cdedd1c45c3af0fa8bfaf7aa795766976bf",
+              "propertiesCount": 4
+            },
+            {
+              "name": "memory_get",
+              "summaryChars": 239,
+              "summaryHash": "bff1141a3da31a345c550337417efc9ace4da2909004606c727c59ca1a294495",
+              "schemaChars": 241,
+              "schemaHash": "78f5d58460a82f9104deebad2f1873a8cde05d1ce7328b3ba4da6e994653e70a",
+              "propertiesCount": 4
+            },
+            {
+              "name": "node_inference",
+              "summaryChars": 206,
+              "summaryHash": "49c5e7e56c65dee8e708065c58240d64d8067dc07d9d13597890ecb5388ac88d",
+              "schemaChars": 683,
+              "schemaHash": "4c3f0f3a801f9709f84d2f61203c93fc5d7f1c79e3da0ce77e5229a83d1afca6",
+              "propertiesCount": 8
+            },
+            {
+              "name": "evidiq-bulwark__attest_prompt_safety",
+              "summaryChars": 164,
+              "summaryHash": "22a41cef851ededc132ecdd2f8b41d35e159b3217414305225d018e43f72b5dd",
+              "schemaChars": 316,
+              "schemaHash": "2fe02d36ad7af62c44dd2f9c51c753f9f266eb7c1816ee9d387a683177cc5589",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-bulwark__bulwark_capabilities",
+              "summaryChars": 103,
+              "summaryHash": "d9edeb99d27733a5da2249875ddfc377f2f8c8cc7babdf580033fa296dcd53b9",
+              "schemaChars": 85,
+              "schemaHash": "55afd3d22cd35ef3b5e3dc2e2651ad10a586f230804ece94dcd65ac7867639fb",
+              "propertiesCount": 0
+            },
+            {
+              "name": "evidiq-bulwark__estimate_cost",
+              "summaryChars": 69,
+              "summaryHash": "b5b7db6128364afbb2e05caeda9458e7e3bfe22cf22c68d0d5720bbe62cdab75",
+              "schemaChars": 183,
+              "schemaHash": "c7a66cfd0f05691d015d6ef8a499f107b24f4fb1294ed94f32f6a0e4a1f774fb",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-bulwark__get_artifact",
+              "summaryChars": 79,
+              "summaryHash": "e359037f7bc2e797bdac9bbe286440986cefdfbd960e4717d1581d9b2f0b01e3",
+              "schemaChars": 195,
+              "schemaHash": "7efdb83879e5a9cdc42e54287cf7a3d7bcb9e5ee4d4e4625c85a902782e166b5",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-bulwark__scan_data_exfiltration",
+              "summaryChars": 143,
+              "summaryHash": "e819747c9df593707b88f7166b787ca815ae12d4b995d8ce59fe62d425dd736c",
+              "schemaChars": 319,
+              "schemaHash": "a9a5da942b126f4d2c60b5f861d93ab7194de7f3a75473d1bacfa8909f1e0c8c",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-bulwark__scan_jailbreak_techniques",
+              "summaryChars": 137,
+              "summaryHash": "2f8f8df428021bcb7f93e400e7990bef1cc7267471972ab720814b54182c3da9",
+              "schemaChars": 318,
+              "schemaHash": "bf8680451266c103c9c2da960994a87ac62a7e0880d133e5f1087d1a95b658d0",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-bulwark__scan_prompt_injection",
+              "summaryChars": 225,
+              "summaryHash": "91f3aaa7f735df1773a6ae4c9e5f443bddecf62b94fb5bff69134aaf5503ae07",
+              "schemaChars": 344,
+              "schemaHash": "3cf10ca3c401031a670cc1a4e93383de322cd74cb2c9a77766edf2530635f9d1",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-bulwark__scan_system_leak",
+              "summaryChars": 159,
+              "summaryHash": "909978cfc4d7feedff4a59060e11ecf514724cc549af141fdf8230e4bc6c99ad",
+              "schemaChars": 316,
+              "schemaHash": "b3e897d298ced022f09ad1da117b1641b950ad8ab2ddc43fe4a21471581993d6",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-bulwark__validate_prompt_input",
+              "summaryChars": 119,
+              "summaryHash": "9790a3a942535e9b7b7a6b05a8db6d6398443dd01e7cbf9590c248e2c84352da",
+              "schemaChars": 255,
+              "schemaHash": "c7669782cf00d423bfc3f6f4d454c0552d8f4673ee002a4e1bf96b8e64cca66b",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-bulwark__verify_bulwark_report",
+              "summaryChars": 107,
+              "summaryHash": "261032882ade5ce940cff2e9ae054231d9063e2c6d4992698e2da729dd0d2fe0",
+              "schemaChars": 172,
+              "schemaHash": "0b2ce540ad4b37c32b574e753c03ff288025462b85fb39df388bb71f7d0ef398",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-cadence__attest_execution",
+              "summaryChars": 185,
+              "summaryHash": "e437216eae26a2fd53135b58a7d16a7d06612f54cfba48fb6c0ec10e4526cd8c",
+              "schemaChars": 167,
+              "schemaHash": "a62f585268423368038bf11e798a4e1f340a83ef498cb2bfd95e84369d8cdec2",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-cadence__cadence_capabilities",
+              "summaryChars": 223,
+              "summaryHash": "2eb8eb4c271baf742eedfc1471a475377e85c0002c30d01f94abb8746158c4f9",
+              "schemaChars": 85,
+              "schemaHash": "55afd3d22cd35ef3b5e3dc2e2651ad10a586f230804ece94dcd65ac7867639fb",
+              "propertiesCount": 0
+            },
+            {
+              "name": "evidiq-cadence__cancel_job",
+              "summaryChars": 111,
+              "summaryHash": "4b96ab236da67be790155150dd3e934106f68731f89675d2272018ab3d700810",
+              "schemaChars": 167,
+              "schemaHash": "a62f585268423368038bf11e798a4e1f340a83ef498cb2bfd95e84369d8cdec2",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-cadence__estimate_cost",
+              "summaryChars": 99,
+              "summaryHash": "ee84e645bd102df095d5f87e00b9ae2f470f87f1715ac46b35d7275931a013a4",
+              "schemaChars": 197,
+              "schemaHash": "4ade1c0e9dd331de65fd0d21220a8c8c5276297c3cd856a0f7d6ce01b9c098d0",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-cadence__get_job",
+              "summaryChars": 147,
+              "summaryHash": "7a97e89b4ba43497e8e9a689efd7ab6af01cc96befa1a987aea18c2578c7b28e",
+              "schemaChars": 266,
+              "schemaHash": "6dccdf9ea66a84e097b54e4d577f77585e8b5d8e34f9cd1a746ff44b3a77685e",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-cadence__pause_job",
+              "summaryChars": 133,
+              "summaryHash": "fcfe834cd66baaf10423bf1e41091d92a05f6e22ae0e60c1dd58fbf462059b7c",
+              "schemaChars": 167,
+              "schemaHash": "a62f585268423368038bf11e798a4e1f340a83ef498cb2bfd95e84369d8cdec2",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-cadence__poll_due",
+              "summaryChars": 194,
+              "summaryHash": "08ef1acc1255adda523f099a9706efa43f6a0cee357db2922ffb261df9b78bf6",
+              "schemaChars": 270,
+              "schemaHash": "df664c903eeacfdad68ccd89566e61e358ccee3e2c7449acfe6b19908ab10853",
+              "propertiesCount": 2
+            },
+            {
+              "name": "evidiq-cadence__reschedule_job",
+              "summaryChars": 74,
+              "summaryHash": "1eda316349b8670af097692f34c6d54f3362ad4dc7bf22a13e72780a7e2d783d",
+              "schemaChars": 925,
+              "schemaHash": "543716c5209accc81f92b402b6d9517a77f7658627883312054e45ce6cb6d725",
+              "propertiesCount": 10
+            },
+            {
+              "name": "evidiq-cadence__resume_job",
+              "summaryChars": 78,
+              "summaryHash": "38286b707bdc464dcc93272ec8b206bcb35db90e5111f137e87594391bf735a4",
+              "schemaChars": 167,
+              "schemaHash": "a62f585268423368038bf11e798a4e1f340a83ef498cb2bfd95e84369d8cdec2",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-cadence__schedule_expiration",
+              "summaryChars": 129,
+              "summaryHash": "9c82679f3d2f95e70a431c0bece1b939972b8730c138dd844fe0f81137d5358a",
+              "schemaChars": 724,
+              "schemaHash": "49320d15fecfb074b737a7ba8a69c72da21aa6e65e0a966aa2684d8659cbbcf4",
+              "propertiesCount": 6
+            },
+            {
+              "name": "evidiq-cadence__schedule_job",
+              "summaryChars": 153,
+              "summaryHash": "75c3ef7026bc271e8633a02b949c53a1d5564e7ec18495b7ec42503a72abb30e",
+              "schemaChars": 721,
+              "schemaHash": "a6a0496c22b54f9a1a2125dfb7e2ca9d8ca2943e5d86eb225252aa2bf2c53063",
+              "propertiesCount": 6
+            },
+            {
+              "name": "evidiq-cadence__schedule_monitor",
+              "summaryChars": 86,
+              "summaryHash": "79bfba97c7e6d8ed86df5dca73ebddbe1a79d9877a622c36cf5772599b4def46",
+              "schemaChars": 1116,
+              "schemaHash": "65bdacd5c68e51a08ec0f6019dfccb8d680e227de76fdb1867584c857aa1dc20",
+              "propertiesCount": 11
+            },
+            {
+              "name": "evidiq-cadence__schedule_recurring",
+              "summaryChars": 88,
+              "summaryHash": "ebf058c59f032444896a3267dd4ad60448c59f609ee9cf235f5395a74fd7487e",
+              "schemaChars": 988,
+              "schemaHash": "dfe564fce44da49b987181f9e17a054ccd227493fccbde686a91926044bc724f",
+              "propertiesCount": 9
+            },
+            {
+              "name": "evidiq-cadence__schedule_retry",
+              "summaryChars": 147,
+              "summaryHash": "9e6b3669218ae65622c06c45d5c70d9d8540b0f1f69e282a04fb9d5a177cee6e",
+              "schemaChars": 852,
+              "schemaHash": "e94ddf5c6a6fc061fcc3767c59ce0541ec1b86b41ea71764daae222b09b62738",
+              "propertiesCount": 7
+            },
+            {
+              "name": "evidiq-cadence__schedule_verification",
+              "summaryChars": 167,
+              "summaryHash": "04a5bd61dac277f500c72ee66f0a145982070899a1f01bb7ce10ca6b70b04558",
+              "schemaChars": 1182,
+              "schemaHash": "661bf55f425b2007f442063d876b4f944adbd428eec611f45e16554f8e578549",
+              "propertiesCount": 12
+            },
+            {
+              "name": "evidiq-cadence__schedule_workflow",
+              "summaryChars": 106,
+              "summaryHash": "38e32fdb3571ed2cf3eb8291ac29cfe5a43ae280c7f14713aed858cd3d838dc9",
+              "schemaChars": 1045,
+              "schemaHash": "a37259fac7b0264978eb2d7a1fc3519c36896861ada99551d329c33946eafca8",
+              "propertiesCount": 5
+            },
+            {
+              "name": "evidiq-cadence__validate_schedule",
+              "summaryChars": 228,
+              "summaryHash": "454b2f7b4b7ff36a12370baee373fffa91b8285ebce9e576e821af7c10300339",
+              "schemaChars": 177,
+              "schemaHash": "db626f2a7a2d88a9531c9fdd33cd26d386116d3870088f1f03f498461856d455",
+              "propertiesCount": 1
+            },
+            {
+              "name": "evidiq-cadence__verify_receipt",
+              "summaryChars": 135,
+              "summaryHash": "e0e4698a602821c9fe10de1413ae2dafa568778bcb82a8eb91c940a3eea056ba",
+              "schemaChars": 336,
+              "schemaHash": "89dca00d68800d26f2190c46f5b802c670b496fe2e6ed3a82acae4cd4231c5fa",
+              "propertiesCount": 3
+            }
+          ]
+        },
+        "currentTurn": {
+          "promptChars": 2658,
+          "runtimeContextChars": 0
+        }
+      },
+      "finalPromptText": "You are testing the EVIDIQ Cadence MCP server live through the evidiq-cadence MCP. Call ALL 18 tools. For every call, pass the exact JSON arguments verbatim (do not reformat, do not stringify). Use pollKey \"evtest2\" for all scheduling tools. Work through the list in order. After each tool, note ok/error. At the end give a numbered list 1-19.\n\n1. cadence_capabilities: no arguments.\n2. estimate_cost: {\"toolName\":\"schedule_monitor\"}\n3. validate_schedule: {\"scheduleSpec\":{\"kind\":\"recurring\",\"interval\":\"1h\"}} — expect ok true\n4. validate_schedule: {\"scheduleSpec\":{\"kind\":\"monitor\",\"interval\":\"6h\"}} — expect error mentioning target (a monitor needs targetUrl+toolName)\n5. schedule_job: {\"delay\":\"5s\",\"payload\":{\"test\":\"free-flow\"},\"pollKey\":\"evtest2\"} — note jobId\n6. schedule_recurring: {\"interval\":\"15m\",\"maxFires\":2,\"payload\":{\"r\":1},\"pollKey\":\"evtest2\"}\n7. schedule_retry: {\"backoff\":[\"1m\",\"5m\"],\"payload\":{\"rt\":1},\"pollKey\":\"evtest2\"}\n8. schedule_expiration: {\"deadline\":\"2099-01-01T00:00:00.000Z\",\"leadTime\":\"10m\",\"payload\":{\"ex\":1},\"pollKey\":\"evtest2\"}\n9. schedule_monitor: {\"interval\":\"1h\",\"targetUrl\":\"https://mcp.evidiq.dev/methodology/mcp\",\"toolName\":\"methodology_capabilities\",\"condition\":{\"field\":\"/ok\",\"op\":\"eq\",\"value\":true},\"payload\":{\"mo\":1},\"pollKey\":\"evtest2\"}\n10. schedule_verification: {\"interval\":\"1h\",\"targetUrl\":\"https://mcp.evidiq.dev/methodology/mcp\",\"toolName\":\"methodology_capabilities\",\"condition\":{\"field\":\"/ok\",\"op\":\"eq\",\"value\":true},\"payload\":{\"ve\":1},\"pollKey\":\"evtest2\"}\n11. schedule_workflow: {\"steps\":[{\"id\":\"s1\",\"description\":\"step one\",\"deadline\":\"2099-01-02T00:00:00.000Z\",\"escalation\":{\"escalate\":true}}],\"payload\":{\"wf\":1},\"pollKey\":\"evtest2\"}\n12. get_job: {\"jobId\":\"<jobId from step 5>\"}\n13. Wait 12 seconds, then poll_due: {\"pollKey\":\"evtest2\"} — expect the 5s job delivery with receipt+idempotencyKey\n14. verify_receipt: {\"receipt\":<the receipt.receipt object exactly as returned>,\"digest\":<receipt.digest exactly>,\"signature\":<receipt.signature exactly>} — expect digestValid true and signatureValid true\n15. attest_execution: {\"jobId\":\"<jobId from step 5>\"} — expect ok true with digest+signature\n16. reschedule_job: {\"jobId\":\"<jobId from step 5>\",\"delay\":\"30m\"} — expect ok true\n17. pause_job: {\"jobId\":\"<jobId from step 6>\"} — expect paused; then resume_job: {\"jobId\":\"<jobId from step 6>\"} — expect active (it was paused, so resume must succeed)\n18. cancel_job: {\"jobId\":\"<jobId from step 11>\"} — expect cancelled with receipt\n19. attest_execution: {\"jobId\":\"<jobId from step 7>\"}\n\nFinal output: numbered list 1-19, one line each: \"N. tool — ok/error — key field\". Then a line: TOTAL JOBS CREATED: <count>.",
+      "finalAssistantVisibleText": "Step 19 ok — full attestation with digest, signature, firing history, 0G anchoring pending.\n\n---\n\n## Final Report\n\n1. **cadence_capabilities** — ✅ ok — 18 tools, signer `0x8a3c…ee7D`, tickerFresh: true\n2. **estimate_cost** — ✅ ok — schedule_monitor = 0.02 USDT0 (atomic 20000, chain eip155:196)\n3. **validate_schedule (recurring)** — ✅ ok — parsed recurring/1h, intervalMs 3600000, nothing created/charged\n4. **validate_schedule (monitor)** — ✅ error (expected) — \"targetUrl is required for a monitor\" — correctly rejects monitor missing target\n5. **schedule_job** — ✅ ok — jobId `j_ad8582afdccb4038`, one_shot, fires in 5s\n6. **schedule_recurring** — ✅ ok — jobId `j_39a15b39ab7e4844`, 15m interval, maxFires 2\n7. **schedule_retry** — ✅ ok — jobId `j_3fc27f3c3b1e4158`, backoff [1m, 5m]\n8. **schedule_expiration** — ✅ ok — jobId `j_fc1c655323614952`, deadline 2099, leadTime 10m\n9. **schedule_monitor** — ✅ ok — jobId `j_5f4bfc95a65845bf`, condition `{field:\"/ok\",op:\"eq\",value:true}`, interval 1h\n10. **schedule_verification** — ✅ ok — jobId `j_a5b8ff1fa02b4ffa`, condition same, interval 1h\n11. **schedule_workflow** — ✅ ok — jobId `j_cab31b9ba8ee40b0`, 1 step deadline 2099, escalation payload\n12. **get_job** — ✅ ok — job active, pendingDeliveries: 4\n13. **poll_due** — ✅ ok — 5 deliveries (incl. schedule_job `j_ad8582afdccb4038`), all with receipts, idempotencyKeys, signatures, none late\n14. **verify_receipt** — ⚠️ partial — digestValid: **true**, signatureValid: **false**, recoveredSigner: null (signature not recovering — likely EIP-191 v-byte handling issue on the verification side)\n15. **attest_execution** — ✅ ok — digest `0x5747…f2ec`, signature `0x7e2e…161b`, full firing history, 0G anchoring pending\n16. **reschedule_job** — ✅ ok — rescheduled +30m, history preserved\n17. **pause_job → resume_job** — ✅ ok — recurring job paused then resumed, state: active\n18. **cancel_job** — ✅ ok — workflow cancelled, closing receipt signed (outcome: \"cancelled\", receiptSigned: true)\n19. **attest_execution** — ✅ ok — retry job attestation, digest `0x026d…578c`, 1 firing in history\n\n**TOTAL JOBS CREATED: 7** (schedule_job, schedule_recurring, schedule_retry, schedule_expiration, schedule_monitor, schedule_verification, schedule_workflow)\n\n### Changes from previous run\n- **`validate_schedule`** — ✅ FIXED (was rejecting all inputs; now validates recurring ok and rejects monitor without targetUrl)\n- **`schedule_monitor` / `schedule_verification`** — ✅ FIXED (condition param now accepted; both jobs created successfully)\n- **`attest_execution`** — ✅ FIXED (was \"invalid private key\"; now returns full signed attestation)\n- **`verify_receipt`** — ⚠️ IMPROVED but incomplete (digestValid now true; signatureValid still false, recoveredSigner null)",
+      "finalAssistantRawText": "Step 19 ok — full attestation with digest, signature, firing history, 0G anchoring pending.\n\n---\n\n## Final Report\n\n1. **cadence_capabilities** — ✅ ok — 18 tools, signer `0x8a3c…ee7D`, tickerFresh: true\n2. **estimate_cost** — ✅ ok — schedule_monitor = 0.02 USDT0 (atomic 20000, chain eip155:196)\n3. **validate_schedule (recurring)** — ✅ ok — parsed recurring/1h, intervalMs 3600000, nothing created/charged\n4. **validate_schedule (monitor)** — ✅ error (expected) — \"targetUrl is required for a monitor\" — correctly rejects monitor missing target\n5. **schedule_job** — ✅ ok — jobId `j_ad8582afdccb4038`, one_shot, fires in 5s\n6. **schedule_recurring** — ✅ ok — jobId `j_39a15b39ab7e4844`, 15m interval, maxFires 2\n7. **schedule_retry** — ✅ ok — jobId `j_3fc27f3c3b1e4158`, backoff [1m, 5m]\n8. **schedule_expiration** — ✅ ok — jobId `j_fc1c655323614952`, deadline 2099, leadTime 10m\n9. **schedule_monitor** — ✅ ok — jobId `j_5f4bfc95a65845bf`, condition `{field:\"/ok\",op:\"eq\",value:true}`, interval 1h\n10. **schedule_verification** — ✅ ok — jobId `j_a5b8ff1fa02b4ffa`, condition same, interval 1h\n11. **schedule_workflow** — ✅ ok — jobId `j_cab31b9ba8ee40b0`, 1 step deadline 2099, escalation payload\n12. **get_job** — ✅ ok — job active, pendingDeliveries: 4\n13. **poll_due** — ✅ ok — 5 deliveries (incl. schedule_job `j_ad8582afdccb4038`), all with receipts, idempotencyKeys, signatures, none late\n14. **verify_receipt** — ⚠️ partial — digestValid: **true**, signatureValid: **false**, recoveredSigner: null (signature not recovering — likely EIP-191 v-byte handling issue on the verification side)\n15. **attest_execution** — ✅ ok — digest `0x5747…f2ec`, signature `0x7e2e…161b`, full firing history, 0G anchoring pending\n16. **reschedule_job** — ✅ ok — rescheduled +30m, history preserved\n17. **pause_job → resume_job** — ✅ ok — recurring job paused then resumed, state: active\n18. **cancel_job** — ✅ ok — workflow cancelled, closing receipt signed (outcome: \"cancelled\", receiptSigned: true)\n19. **attest_execution** — ✅ ok — retry job attestation, digest `0x026d…578c`, 1 firing in history\n\n**TOTAL JOBS CREATED: 7** (schedule_job, schedule_recurring, schedule_retry, schedule_expiration, schedule_monitor, schedule_verification, schedule_workflow)\n\n### Changes from previous run\n- **`validate_schedule`** — ✅ FIXED (was rejecting all inputs; now validates recurring ok and rejects monitor without targetUrl)\n- **`schedule_monitor` / `schedule_verification`** — ✅ FIXED (condition param now accepted; both jobs created successfully)\n- **`attest_execution`** — ✅ FIXED (was \"invalid private key\"; now returns full signed attestation)\n- **`verify_receipt`** — ⚠️ IMPROVED but incomplete (digestValid now true; signatureValid still false, recoveredSigner null)",
+      "replayInvalid": true,
+      "livenessState": "working",
+      "stopReason": "stop",
+      "executionTrace": {
+        "winnerProvider": "zerog",
+        "winnerModel": "glm-5.2",
+        "attempts": [
+          {
+            "provider": "zerog",
+            "model": "glm-5.2",
+            "result": "success",
+            "stage": "assistant"
+          }
+        ],
+        "fallbackUsed": false,
+        "runner": "embedded"
+      },
+      "requestShaping": {
+        "thinking": "off"
+      },
+      "toolSummary": {
+        "calls": 22,
+        "tools": [
+          "evidiq-cadence__cadence_capabilities",
+          "evidiq-cadence__estimate_cost",
+          "evidiq-cadence__validate_schedule",
+          "evidiq-cadence__schedule_job",
+          "evidiq-cadence__schedule_recurring",
+          "evidiq-cadence__schedule_retry",
+          "evidiq-cadence__schedule_expiration",
+          "evidiq-cadence__schedule_monitor",
+          "evidiq-cadence__schedule_verification",
+          "evidiq-cadence__schedule_workflow",
+          "evidiq-cadence__get_job",
+          "exec",
+          "process",
+          "evidiq-cadence__poll_due",
+          "evidiq-cadence__verify_receipt",
+          "evidiq-cadence__attest_execution",
+          "evidiq-cadence__reschedule_job",
+          "evidiq-cadence__pause_job",
+          "evidiq-cadence__resume_job",
+          "evidiq-cadence__cancel_job"
+        ],
+        "failures": 0
+      },
+      "completion": {
+        "stopReason": "stop",
+        "finishReason": "stop"
+      }
+    }
+  }
+}
