@@ -38,7 +38,7 @@ and hands back a signed receipt proving the wake-up was delivered.
 1. **Scheduling engine** — one-shot, recurring (interval or cron), retry ladders, expirations with lead time, standing monitors and verification watches, and multi-step workflows with escalations.
 2. **MCP server** — 18 tools (8 free, 10 paid) that turn a schedule spec into a durable, attested job: `schedule_*` + `reschedule` / `resume` / `attest` for money, `validate` / `estimate` / `poll_due` / `verify_receipt` / `get_job` / `pause` / `cancel` / `capabilities` for free.
 
-> **Launch status: Phase 1 — live.** The MCP server is deployed at `https://mcp.evidiq.dev/cadence/mcp` (port 3018, `X402_BYPASS=1`, not registered). All 18 tools verified live end-to-end through the OpenClaw agent (glm-5.2) — evidence in `docs/live-test/`. `poll` delivery proven live with EIP-191 receipts that verify against the fleet signer; `webhook` implemented; `a2a` is held back by the Phase-1 gate (no real firing observed arriving yet) and is not advertised.
+> **Launch status: Phase 2 — live and paid.** Deployed at `https://mcp.evidiq.dev/cadence/mcp` (port 3018), the x402 gate is on, and the first real paid call has settled on X Layer. Registered on OKX.AI as Agent **#10405** with all 18 tools; listing under review. All 18 tools were verified live end-to-end through the OpenClaw agent (glm-5.2) — evidence in `docs/live-test/`. `poll` delivery is proven with EIP-191 receipts that verify against the fleet signer, `webhook` is implemented, and `a2a` remains **unadvertised**: no real firing has yet been observed arriving at a buyer agent's inbox, and no capability is listed here that has not been watched working.
 
 ---
 
@@ -67,7 +67,13 @@ A natural chain: `cadence_capabilities` → `validate_schedule` → `estimate_co
 
 | Tool | Amount | Settlement tx | Result |
 |------|--------|---------------|--------|
-| _pending_ | `0.005–0.03 USDT0` | — | Phase 2 — gate on, first paid call settles here |
+| `schedule_job` | `0.005 USDT0` | [`0xd3a86a0a…7fae3e`](https://www.oklink.com/xlayer/tx/0xd3a86a0a3a8a608b7aef91c6b86d0a19e9a29609ea977694a0fb13b6d07fae3e) | `settled` · job `j_e32ce87c625d422d` scheduled by the paid call |
+
+Flow: HTTP 402 challenge → EIP-3009 signature → `transferWithAuthorization` (gasless for
+the payer) → tool executes. Reproduce the quote with
+`onchainos payment quote https://mcp.evidiq.dev/cadence/mcp --method POST --tool schedule_job`;
+without `--tool` the CLI takes its discovery branch and returns the tool catalogue with an
+empty `accepts`, which is correct behaviour and not an error.
 
 ### 0G Storage Anchoring (0G mainnet, chain 16661)
 
@@ -81,12 +87,14 @@ A natural chain: `cadence_capabilities` → `validate_schedule` → `estimate_co
 
 | Property | Value |
 | :--- | :--- |
-| **Agent ID** | — (Phase 2) |
+| **Agent ID** | `#10405` |
 | **Agent Name** | `EVIDIQ Cadence` |
-| **Listing Status** | `Not registered — Phase 1 (X402_BYPASS=1)` |
-| **Registration Tx** | — |
-| **OKX Agent URL** | — |
-| **Communication Addr** | `0x8a3c7524Aaed081825aC88eC7f4cCECFc583ee7D` (fleet signer, live) |
+| **Listing Status** | `Listing under review` |
+| **Registration Tx** | [`0x992a2504…96930e`](https://www.oklink.com/xlayer/tx/0x992a2504425bae4c60cb266cd3a7e766df190bcd4796b8e0ae86736c0a96930e) |
+| **OKX Agent URL** | https://www.okx.ai/agents/10405 |
+| **Agent Wallet** | `0x2a8efe3093278bb4bd3b2d9c7b5ba992ca4fc9b0` |
+| **Communication Addr** | `0xDE9E80AC5dF8837732BfBF2BD58001a3A22d2fEf` |
+| **Report Signer** | `0x8a3c7524Aaed081825aC88eC7f4cCECFc583ee7D` (fleet signer, EIP-191) |
 | **Services Registered** | 18 Tools (10 Paid: $0.005–$0.03, 8 Free: $0.00) |
 
 ---
@@ -132,7 +140,7 @@ flowchart TB
     agent -->|POST /cadence/mcp| request
 
     free["Free preflight & lifecycle<br/>capabilities · validate · estimate<br/>get_job · poll_due · verify_receipt<br/>pause · cancel"]
-    gate["x402 v2 gate<br/>EIP-3009 exact · pay per schedule<br/>Phase 1: X402_BYPASS=1"]
+    gate["x402 v2 gate<br/>EIP-3009 exact · pay per schedule<br/>402 unpaid · settles on X Layer"]
     xlayer[("X Layer<br/>USD₮0 · eip155:196")]
     request -->|free helper| free
     request -->|paid schedule| gate
@@ -189,7 +197,7 @@ Free Tools (HTTP 200)
   pause_job → resume_job      → 200 ✓
   cancel_job                  → 200 ✓ (closing receipt signed)
 
-Paid Tools (HTTP 200 — bypass mode, Phase 1; 402 in Phase 2)
+Paid Tools (HTTP 402 unpaid; 200 after settlement — verified live in Phase 2)
   schedule_job                → 200 ✓ (fired in 5s, receipt signed)
   schedule_recurring          → 200 ✓
   schedule_retry              → 200 ✓
