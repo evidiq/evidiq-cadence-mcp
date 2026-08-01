@@ -11,6 +11,7 @@ import {
 import { buildReceipt, verifyReceipt, getSignerAddress, signerAvailable } from "./lib/cadence/receipt.js";
 import { TOOL_PRICES_ATOMIC, TOOL_PRICES_HUMAN, FREE_TOOL_NAMES } from "./lib/x402/challenge.js";
 import { isPaidTool } from "./lib/x402/gate.js";
+import { anchorToOgStorage } from "./lib/og/storage.js";
 
 function textResult(value: unknown) {
   return { content: [{ type: "text" as const, text: JSON.stringify(value, null, 2) }] };
@@ -808,13 +809,35 @@ Delivery: poll (always works, the baseline), webhook (signed with EIP-191 header
             });
           }
           const signed = await signObject(attestationPayload);
+          let anchoring: Record<string, unknown> = {
+            status: "pending",
+            note: "0G anchoring is best effort in Phase 1.",
+          };
+          try {
+            const anchor = await anchorToOgStorage({
+              schema: "evidiq-cadence-attestation",
+              version: 1,
+              attestedAt: new Date().toISOString(),
+              digest: signed.digest,
+              signature: signed.signature,
+              attestation: attestationPayload,
+            });
+            anchoring = anchor.ok && anchor.root && anchor.tx
+              ? { status: "anchored", storageRoot: anchor.root, tx: anchor.tx }
+              : {
+                  status: "failed",
+                  reason: anchor.ok ? "0G upload returned no root/tx hash" : anchor.error,
+                };
+          } catch (err) {
+            anchoring = { status: "failed", reason: (err as Error).message };
+          }
           return textResult({
             ok: true,
             jobId,
             attestation: attestationPayload,
             digest: signed.digest,
             signature: signed.signature,
-            anchoring: { status: "pending", note: "0G anchoring is best effort in Phase 1." },
+            anchoring,
           });
         }
       );

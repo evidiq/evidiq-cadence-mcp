@@ -308,6 +308,30 @@ describe("paid tools under bypass", () => {
     expect(attested.signature).toMatch(/^0x[0-9a-f]{130}$/);
   });
 
+  it("attest_execution stays a paid success when 0G anchoring is not configured (best effort)", async () => {
+    delete process.env.OG_PRIVATE_KEY;
+    delete process.env.OG_STORAGE_RPC;
+    const created = JSON.parse(
+      (await textResultOf(await call("schedule_job", { delay: "1s", payload: { v: 1 } }))).toolText!
+    ) as { jobId: string };
+    await runtime.ticker.runTick();
+    await new Promise((r) => setTimeout(r, 1100));
+    await runtime.ticker.runTick();
+    const attested = JSON.parse(
+      (await textResultOf(await call("attest_execution", { jobId: created.jobId }))).toolText!
+    ) as {
+      ok: boolean;
+      digest: string;
+      signature: string;
+      anchoring: { status: string; reason?: string };
+    };
+    expect(attested.ok).toBe(true);
+    expect(attested.digest).toMatch(/^0x[0-9a-f]{64}$/);
+    expect(attested.signature).toMatch(/^0x[0-9a-f]{130}$/);
+    expect(attested.anchoring.status).toBe("failed");
+    expect(attested.anchoring.reason).toMatch(/not configured/);
+  });
+
   it("verify_receipt confirms a signed firing receipt", async () => {
     const created = JSON.parse(
       (await textResultOf(await call("schedule_job", { delay: "1s", payload: { v: 1 } }))).toolText!

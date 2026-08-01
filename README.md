@@ -73,7 +73,7 @@ A natural chain: `cadence_capabilities` → `validate_schedule` → `estimate_co
 
 | Anchor tx | Storage root | Verified |
 |-----------|-------------|----------|
-| — | — | Phase 2 — `attest_execution` anchors here |
+| [`0x255786c1…731b3`](https://chainscan.0g.ai/tx/0x255786c181d222752a71133be60f9f364ffbb2fcb487a3532fc1732fce6731b3) | `0x98d24b2b…feffc581` | `status 0x1` on 0G mainnet · `eth_getTransactionReceipt` via `evmrpc.0g.ai` · signer `0x8a3c…ee7D` |
 
 ---
 
@@ -195,7 +195,7 @@ Paid Tools (HTTP 200 — bypass mode, Phase 1; 402 in Phase 2)
   schedule_workflow           → 200 ✓
   reschedule_job              → 200 ✓
   resume_job                  → 200 ✓
-  attest_execution            → 200 ✓ (digest + signature + firing history)
+  attest_execution            → 200 ✓ (digest + signature + firing history + 0G anchored)
 
 HEAD /mcp → 402 · empty body (no hang) ✓
 Empty POST /mcp → usage JSON ✓ · free tools answer bare {} ✓
