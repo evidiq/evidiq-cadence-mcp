@@ -184,7 +184,7 @@ flowchart TB
 
 ## Verification Log
 
-All 18 tools tested live via the OpenClaw agent (glm-5.2) against `https://mcp.evidiq.dev/cadence/mcp` on 2026-08-02; raw run + HTML report + screenshot in `docs/live-test/`. Phase 1 runs `X402_BYPASS=1`, so paid tools answer 200 — the 402 gate is verified in the codebase and flips on in Phase 2.
+All 18 tools tested live via the OpenClaw agent (glm-5.2) against `https://mcp.evidiq.dev/cadence/mcp`; raw run + HTML report + screenshot in `docs/live-test/`. **This capture was taken in Phase 1 with `X402_BYPASS=1`**, which is why the paid tools answer 200 below: the point of that run was to prove every tool's behaviour, not the gate. The gate was verified separately once it was switched on — see the Phase 2 block after the log.
 
 ```
 Free Tools (HTTP 200)
@@ -197,7 +197,7 @@ Free Tools (HTTP 200)
   pause_job → resume_job      → 200 ✓
   cancel_job                  → 200 ✓ (closing receipt signed)
 
-Paid Tools (HTTP 402 unpaid; 200 after settlement — verified live in Phase 2)
+Paid Tools (200 here because this run had the bypass on — see the Phase 2 block below)
   schedule_job                → 200 ✓ (fired in 5s, receipt signed)
   schedule_recurring          → 200 ✓
   schedule_retry              → 200 ✓
@@ -216,6 +216,27 @@ Live receipt verification (curl, full signature)
   digestValid: true ✓
   signatureValid: true ✓
   expectedSigner == recoveredSigner == 0x8a3c7524Aaed081825aC88eC7f4cCECFc583ee7D ✓
+```
+
+### Phase 2 — the gate, measured after the bypass was removed
+
+Re-probed from outside once `X402_BYPASS` was deleted from the container environment and
+the service redeployed. Every assertion below was observed, not inferred:
+
+```
+empty POST (with content-type)                     → 402
+POST without content-type                          → 415
+HEAD /mcp                                          → 402, no hang
+all 10 paid tools, bare {}                         → 402
+  schedule_job schedule_recurring schedule_retry schedule_expiration
+  schedule_monitor schedule_verification schedule_workflow
+  reschedule_job resume_job attest_execution
+all 8 free tools, bare {}                          → 200 with content
+  cadence_capabilities estimate_cost validate_schedule verify_receipt
+  get_job poll_due pause_job cancel_job
+onchainos payment quote --tool schedule_job        → 0.005 USDT0, hasBalance true
+onchainos payment pay                              → settled, tool executed
+fleet sweep across all 17 services                 → broken_entries=0
 ```
 
 ### Live test through the OpenClaw agent (glm-5.2)
