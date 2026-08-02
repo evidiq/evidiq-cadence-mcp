@@ -38,7 +38,7 @@ and hands back a signed receipt proving the wake-up was delivered.
 1. **Scheduling engine** — one-shot, recurring (interval or cron), retry ladders, expirations with lead time, standing monitors and verification watches, and multi-step workflows with escalations.
 2. **MCP server** — 18 tools (8 free, 10 paid) that turn a schedule spec into a durable, attested job: `schedule_*` + `reschedule` / `resume` / `attest` for money, `validate` / `estimate` / `poll_due` / `verify_receipt` / `get_job` / `pause` / `cancel` / `capabilities` for free.
 
-> **Launch status: Phase 2 — live and paid.** Deployed at `https://mcp.evidiq.dev/cadence/mcp` (port 3018), the x402 gate is on, and the first real paid call has settled on X Layer. Registered on OKX.AI as Agent **#10405** with all 18 tools; listing under review. All 18 tools were verified live end-to-end through the OpenClaw agent (glm-5.2) — evidence in `docs/live-test/`. `poll` delivery is proven with EIP-191 receipts that verify against the fleet signer, `webhook` is implemented, and `a2a` remains **unadvertised**: no real firing has yet been observed arriving at a buyer agent's inbox, and no capability is listed here that has not been watched working.
+> **Launch status: Phase 2 — live and paid.** Deployed at `https://mcp.evidiq.dev/cadence/mcp` (port 3018), the x402 gate is on, and the first real paid call has settled on X Layer. Registered on OKX.AI as Agent **#10405** with all 18 tools; the listing is live. All 18 tools were verified live end-to-end through the OpenClaw agent (glm-5.2) — evidence in `docs/live-test/`. `poll` delivery is proven with EIP-191 receipts that verify against the fleet signer, `webhook` is implemented, and `a2a` remains **unadvertised**: no real firing has yet been observed arriving at a buyer agent's inbox, and no capability is listed here that has not been watched working.
 
 ---
 
@@ -89,7 +89,7 @@ empty `accepts`, which is correct behaviour and not an error.
 | :--- | :--- |
 | **Agent ID** | `#10405` |
 | **Agent Name** | `EVIDIQ Cadence` |
-| **Listing Status** | `Listing under review` |
+| **Listing Status** | `Listed` |
 | **Registration Tx** | [`0x992a2504…96930e`](https://www.oklink.com/xlayer/tx/0x992a2504425bae4c60cb266cd3a7e766df190bcd4796b8e0ae86736c0a96930e) |
 | **OKX Agent URL** | https://www.okx.ai/agents/10405 |
 | **Agent Wallet** | `0x2a8efe3093278bb4bd3b2d9c7b5ba992ca4fc9b0` |
